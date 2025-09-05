@@ -1,8 +1,4 @@
 
-
-
-
-
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -42,6 +38,7 @@ export default function FuturisticPortfolio() {
         cursorRef.current.style.top = e.clientY + 'px'
       }
     }
+   
 
     // Particle animation
     const canvas = canvasRef.current
@@ -124,68 +121,129 @@ export default function FuturisticPortfolio() {
 
   const skills = [
     { name: "Backend Development", icon: Server, color: "from-cyan-400 to-blue-600", glowColor: "shadow-cyan-500/50" },
-    { name: "DevOps", icon: Terminal, color: "from-green-400 to-emerald-600", glowColor: "shadow-green-500/50" },
-    { name: "Full-Stack Engineering", icon: Globe, color: "from-purple-400 to-pink-600", glowColor: "shadow-purple-500/50" },
-    { name: "Database Design", icon: Database, color: "from-orange-400 to-red-600", glowColor: "shadow-orange-500/50" },
-    { name: "System Architecture", icon: Layers, color: "from-indigo-400 to-purple-600", glowColor: "shadow-indigo-500/50" },
-    { name: "Cloud Infrastructure", icon: Cloud, color: "from-teal-400 to-cyan-600", glowColor: "shadow-teal-500/50" },
+    { name: "Frontend Development", icon: Terminal, color: "from-green-400 to-emerald-600", glowColor: "shadow-green-500/50" },
+    { name: "API Integration and Development", icon: Globe, color: "from-purple-400 to-pink-600", glowColor: "shadow-purple-500/50" },
+    { name: "Database Managment", icon: Database, color: "from-orange-400 to-red-600", glowColor: "shadow-orange-500/50" },
+    { name: "Data Integration", icon: Layers, color: "from-indigo-400 to-purple-600", glowColor: "shadow-indigo-500/50" },
+    { name: "UI/UX", icon: Cloud, color: "from-teal-400 to-cyan-600", glowColor: "shadow-teal-500/50" },
   ]
 
+
   const technologies = [
-    { name: "Node.js", icon: "⚡", color: "text-green-400", bgColor: "bg-green-500/20" },
-    { name: "Python", icon: "🐍", color: "text-yellow-400", bgColor: "bg-yellow-500/20" },
-    { name: "PostgreSQL", icon: "🗄️", color: "text-blue-400", bgColor: "bg-blue-500/20" },
-    { name: "MongoDB", icon: "🍃", color: "text-green-400", bgColor: "bg-green-500/20" },
-    { name: "Redis", icon: "⚡", color: "text-red-400", bgColor: "bg-red-500/20" },
-    { name: "Docker", icon: "🐳", color: "text-blue-400", bgColor: "bg-blue-500/20" },
-    { name: "AWS", icon: "☁️", color: "text-orange-400", bgColor: "bg-orange-500/20" },
-    { name: "Kubernetes", icon: "⚙️", color: "text-cyan-400", bgColor: "bg-cyan-500/20" },
-    { name: "React", icon: "⚛️", color: "text-cyan-400", bgColor: "bg-cyan-500/20" },
-    { name: "TypeScript", icon: "📘", color: "text-blue-400", bgColor: "bg-blue-500/20" },
-    { name: "GraphQL", icon: "🔗", color: "text-pink-400", bgColor: "bg-pink-500/20" },
-    { name: "Microservices", icon: "🔧", color: "text-purple-400", bgColor: "bg-purple-500/20" },
-  ]
+  {
+    name: "HTML",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/html5.svg",
+    color: "text-orange-400",
+    bgColor: "bg-orange-500/20"
+  },
+  {
+    name: "CSS",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/css3.svg",
+    color: "text-blue-400",
+    bgColor: "bg-blue-500/20"
+  },
+  {
+    name: "JavaScript",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/javascript.svg",
+    color: "text-yellow-400",
+    bgColor: "bg-yellow-500/20"
+  },
+  {
+    name: "TailwindCSS",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/tailwindcss.svg",
+    color: "text-teal-400",
+    bgColor: "bg-teal-500/20"
+  },
+  {
+    name: "Node.js",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nodedotjs.svg",
+    color: "text-green-400",
+    bgColor: "bg-green-500/20"
+  },
+  {
+    name: "MongoDB",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mongodb.svg",
+    color: "text-green-400",
+    bgColor: "bg-green-500/20"
+  },
+  {
+    name: "SQL",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mysql.svg",
+    color: "text-blue-400",
+    bgColor: "bg-blue-500/20"
+  },
+  {
+    name: "React",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/react.svg",
+    color: "text-cyan-400",
+    bgColor: "bg-cyan-500/20"
+  },
+  {
+    name: "Next.js",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nextdotjs.svg",
+    color: "text-gray-400",
+    bgColor: "bg-gray-500/20"
+  },
+  {
+    name: "TypeScript",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/typescript.svg",
+    color: "text-blue-400",
+    bgColor: "bg-blue-500/20"
+  },
+  {
+    name: "Express.js",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/express.svg",
+    color: "text-purple-400",
+    bgColor: "bg-purple-500/20"
+  },
+  {
+    name: "Python",
+    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg",
+    color: "text-yellow-400",
+    bgColor: "bg-yellow-500/20"
+  }
+]
 
   const projects: Project[] = [
     {
       id: 1,
-      title: "Distributed Task Scheduler",
-      description: "A scalable microservices-based task scheduling system with Redis queue management and Docker containerization.",
-      longDescription: "This project implements a highly scalable distributed task scheduling system using microservices architecture. It features Redis-based queue management, Docker containerization, and real-time monitoring capabilities. The system can handle thousands of concurrent tasks with automatic load balancing and fault tolerance.",
-      tech: ["Node.js", "Redis", "Docker", "PostgreSQL"],
+      title: "Barter System",
+      description: "A skill swap platform where users exchange expertise and services directly, fostering a collaborative community without monetary transactions.",
+      longDescription: "A unique platform that enables users to exchange skills and services directly, eliminating the need for money. Users can offer their expertise in exchange for services they need, creating a community-driven economy based on trust and collaboration.",
+      tech: ["Node.js", "React", "tailwindcss", "next.js", "MongoDB", "TypeScript"],
       githubUrl: "https://github.com/ayushbhardwaj683",
       demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["Real-time monitoring", "Auto-scaling", "Fault tolerance", "Load balancing"]
+      features: [ "Portfolio management", "AI-powered insights", "News integration", "Interactive stock charts", "Dark theme UI", "Watchlist tracking","Recent transactions overview"]
     },
     {
       id: 2,
-      title: "Real-time Analytics Dashboard",
-      description: "Full-stack application with WebSocket integration for live data visualization and user activity tracking.",
-      longDescription: "A comprehensive real-time analytics platform built with modern web technologies. Features live data streaming, interactive charts, user behavior tracking, and customizable dashboards. Supports multiple data sources and provides real-time insights for business intelligence.",
-      tech: ["React", "Express.js", "Socket.io", "MongoDB"],
+      title: "E-com API",
+      description: "A backend e-commerce API built with Node.js and Express, providing secure endpoints for managing products, users, orders, and authentication.",
+      longDescription: "A comprehensive e-commerce API designed for scalability and security. Built with Node.js and Express, it supports user authentication, product management, order processing, and payement integration. Features JWT authentication, role-based access control, and real-time updates using WebSockets.",
+      tech: ["React", "Express.js", "Socket.io", "MongoDB", "node.js"],
       githubUrl: "https://github.com/ayushbhardwaj683",
       demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["Live data streaming", "Interactive charts", "Custom dashboards", "Multi-source integration"]
+      features: ["Product catalog management",  "Secure payment processing",  "Inventory tracking",  "Order management",  "Customer data integration",  "Shipping and logistics",  "Marketplace synchronization",  "Marketing automation"]
     },
     {
       id: 3,
-      title: "API Gateway & Auth Service",
-      description: "Secure API gateway with JWT authentication, rate limiting, and comprehensive logging for microservices.",
-      longDescription: "Enterprise-grade API gateway solution with advanced security features. Implements JWT-based authentication, intelligent rate limiting, request/response transformation, and comprehensive audit logging. Designed for high-throughput microservices environments.",
-      tech: ["Express.js", "JWT", "Redis", "Docker"],
+      title: "Chess Game",
+      description: "A chess gameplay project that allows users to play, track moves, and experience classic chess logic in an interactive interface.",
+      longDescription: "An interactive chess game built with Node.js and Express, featuring real-time multiplayer gameplay, move tracking, and a sleek UI. Users can challenge friends or play against AI, with support for custom rules and game modes.",
+      tech: ["Express.js", "JWT", "MongoDB", "Node.js"],
       githubUrl: "https://github.com/ayushbhardwaj683",
       demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["JWT Authentication", "Rate limiting", "Request transformation", "Audit logging"]
+      features: ["Two-player gameplay","Graphical chessboard","Move validation","AI opponent","Customizable themes","Move history tracking","Online multiplayer","Checkmate detection"]
     },
     {
       id: 4,
-      title: "Cloud Infrastructure Automation",
-      description: "Infrastructure as Code solution using Terraform and CI/CD pipelines for automated deployments.",
-      longDescription: "Complete Infrastructure as Code solution for cloud deployment automation. Features Terraform modules, CI/CD pipeline integration, automated testing, and multi-environment management. Supports AWS, Azure, and GCP with cost optimization and security best practices.",
-      tech: ["Terraform", "AWS", "GitHub Actions", "Docker"],
+      title: "Barter System",
+      description: "The Barter System is a skills swap platform where users exchange expertise and services directly, fostering a collaborative community without monetary transactions.",
+      longDescription: "The Barter System is a unique platform that enables user to exchange skills and services directly, eliminating the need for money. Users can offer their expertise in exchange for services they need, creating a community-driven economy based on trust and collaboration.",
+      tech: ["javascript", "React.js", "Node.js", "Express.js", "mongoDB","tailwindcss"],
       githubUrl: "https://github.com/ayushbhardwaj683",
       demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["Multi-cloud support", "Cost optimization", "Automated testing", "Security compliance"]
+     features: ["User profile creation",  "Skill matching algorithm",  "Direct skill exchange",  "Real-time messaging",  "Point-based system",  "Secure user authentication",  "Community-driven learning",  "Skill swap requests"]
     },
   ]
 
@@ -260,7 +318,7 @@ export default function FuturisticPortfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white relative overflow-hidden">
-      {/* Custom Cursor */}
+    
       <div 
         ref={cursorRef}
         className="fixed w-6 h-6 pointer-events-none z-50 mix-blend-difference"
@@ -270,7 +328,7 @@ export default function FuturisticPortfolio() {
         <div className="absolute inset-0 w-full h-full bg-cyan-400 rounded-full animate-ping"></div>
       </div>
 
-      {/* 3D Particle Background */}
+      
       <canvas 
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none opacity-30"
@@ -336,21 +394,7 @@ export default function FuturisticPortfolio() {
               </p>
             </div>
             
-            {/* <div className="flex gap-4">
-              <Button 
-                onClick={() => scrollToSection("projects")}
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
-              >
-                Explore My Work
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => scrollToSection("contact")}
-                className="border-2 border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 px-8 py-4 text-lg rounded-full transition-all duration-300"
-              >
-                Get In Touch
-              </Button>
-            </div> */}
+            
           </div>
           
           <div className={`relative transition-all duration-1000 delay-500 ${
@@ -401,35 +445,45 @@ export default function FuturisticPortfolio() {
             ))}
           </div>
           
-          {/* Technologies */}
-          <div>
-            <h3 className="text-4xl font-semibold mb-12 text-center bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              Technologies I Master
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {technologies.map((tech, index) => (
-                <div 
-                  key={tech.name}
-                  className={`${tech.bgColor} rounded-2xl p-6 text-center hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-cyan-500/50 backdrop-blur-sm group`}
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                    animation: isVisible ? 'fadeInScale 0.6s ease-out forwards' : 'none'
-                  }}
-                >
-                  <div className="text-4xl mb-3 group-hover:scale-125 transition-transform duration-300">
-                    {tech.icon}
-                  </div>
-                  <p className={`text-sm font-medium ${tech.color} group-hover:text-white transition-colors`}>
-                    {tech.name}
-                  </p>
-                </div>
-              ))}
+         
+
+  
+  
+    <div>
+      <h3 className="text-4xl font-semibold mb-12 text-center bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+        Technologies I Master
+      </h3>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {technologies.map((tech, index) => (
+          <div
+            key={tech.name}
+            className={`${tech.bgColor} rounded-2xl p-6 text-center hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-cyan-500/50 backdrop-blur-sm group`}
+            style={{
+              animationDelay: `${index * 50}ms`,
+              animation: isVisible ? 'fadeInScale 0.6s ease-out forwards' : 'none'
+            }}
+          >
+            <div className="mb-3 group-hover:scale-125 transition-transform duration-300">
+              <img
+                src={tech.logo}
+                alt={`${tech.name} logo`}
+                className="h-10 w-10 mx-auto"
+                style={{ filter: "invert(1)" }} 
+              />
             </div>
+            <p className={`text-sm font-medium ${tech.color} group-hover:text-white transition-colors`}>
+              {tech.name}
+            </p>
           </div>
+        ))}
+      </div>
+    </div>
+  
+
         </div>
       </section>
 
-      {/* Featured Projects Section */}
+      {/*  Projects Section */}
       <section id="projects" className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
