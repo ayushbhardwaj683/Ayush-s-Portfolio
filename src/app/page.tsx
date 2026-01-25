@@ -15,7 +15,7 @@ interface Project {
   longDescription: string;
   tech: string[];
   githubUrl: string;
-  demoVideo: string;
+  // demoVideo: string;
   features: string[];
 }
 
@@ -29,7 +29,7 @@ export default function FuturisticPortfolio() {
 
   useEffect(() => {
     setIsVisible(true)
-    
+
     // Custom cursor tracking
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
@@ -38,7 +38,7 @@ export default function FuturisticPortfolio() {
         cursorRef.current.style.top = e.clientY + 'px'
       }
     }
-   
+
 
     // Particle animation
     const canvas = canvasRef.current
@@ -64,20 +64,20 @@ export default function FuturisticPortfolio() {
       const animate = () => {
         if (!ctx) return
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        
+
         particles.forEach(particle => {
           particle.x += particle.vx
           particle.y += particle.vy
-          
+
           if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
           if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-          
+
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
           ctx.fillStyle = `rgba(0, 255, 255, ${particle.opacity})`
           ctx.fill()
         })
-        
+
         requestAnimationFrame(animate)
       }
       animate()
@@ -130,196 +130,229 @@ export default function FuturisticPortfolio() {
 
 
   const technologies = [
-  {
-    name: "HTML",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/html5.svg",
-    color: "text-orange-400",
-    bgColor: "bg-orange-500/20"
-  },
-  {
-    name: "CSS",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/css3.svg",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20"
-  },
-  {
-    name: "JavaScript",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/javascript.svg",
-    color: "text-yellow-400",
-    bgColor: "bg-yellow-500/20"
-  },
-  {
-    name: "TailwindCSS",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/tailwindcss.svg",
-    color: "text-teal-400",
-    bgColor: "bg-teal-500/20"
-  },
-  {
-    name: "Node.js",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nodedotjs.svg",
-    color: "text-green-400",
-    bgColor: "bg-green-500/20"
-  },
-  {
-    name: "MongoDB",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mongodb.svg",
-    color: "text-green-400",
-    bgColor: "bg-green-500/20"
-  },
-  {
-    name: "SQL",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mysql.svg",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20"
-  },
-  {
-    name: "React",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/react.svg",
-    color: "text-cyan-400",
-    bgColor: "bg-cyan-500/20"
-  },
-  {
-    name: "Next.js",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nextdotjs.svg",
-    color: "text-gray-400",
-    bgColor: "bg-gray-500/20"
-  },
-  {
-    name: "TypeScript",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/typescript.svg",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20"
-  },
-  {
-    name: "Express.js",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/express.svg",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/20"
-  },
-  {
-    name: "Python",
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg",
-    color: "text-yellow-400",
-    bgColor: "bg-yellow-500/20"
-  }
-]
-
-  const projects: Project[] = [
     {
-      id: 1,
-      title: "Barter System",
-      description: "A skill swap platform where users exchange expertise and services directly, fostering a collaborative community without monetary transactions.",
-      longDescription: "A unique platform that enables users to exchange skills and services directly, eliminating the need for money. Users can offer their expertise in exchange for services they need, creating a community-driven economy based on trust and collaboration.",
-      tech: ["Node.js", "React", "tailwindcss", "next.js", "MongoDB", "TypeScript"],
-      githubUrl: "https://github.com/ayushbhardwaj683",
-      demoVideo: "/placeholder.svg?height=300&width=500",
-      features: [ "Portfolio management", "AI-powered insights", "News integration", "Interactive stock charts", "Dark theme UI", "Watchlist tracking","Recent transactions overview"]
+      name: "HTML",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/html5.svg",
+      color: "text-orange-400",
+      bgColor: "bg-orange-500/20"
     },
     {
-      id: 2,
-      title: "E-com API",
-      description: "A backend e-commerce API built with Node.js and Express, providing secure endpoints for managing products, users, orders, and authentication.",
-      longDescription: "A comprehensive e-commerce API designed for scalability and security. Built with Node.js and Express, it supports user authentication, product management, order processing, and payement integration. Features JWT authentication, role-based access control, and real-time updates using WebSockets.",
-      tech: ["React", "Express.js", "Socket.io", "MongoDB", "node.js"],
-      githubUrl: "https://github.com/ayushbhardwaj683",
-      demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["Product catalog management",  "Secure payment processing",  "Inventory tracking",  "Order management",  "Customer data integration",  "Shipping and logistics",  "Marketplace synchronization",  "Marketing automation"]
+      name: "CSS",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/css3.svg",
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/20"
     },
     {
-      id: 3,
-      title: "Chess Game",
-      description: "A chess gameplay project that allows users to play, track moves, and experience classic chess logic in an interactive interface.",
-      longDescription: "An interactive chess game built with Node.js and Express, featuring real-time multiplayer gameplay, move tracking, and a sleek UI. Users can challenge friends or play against AI, with support for custom rules and game modes.",
-      tech: ["Express.js", "JWT", "MongoDB", "Node.js"],
-      githubUrl: "https://github.com/ayushbhardwaj683",
-      demoVideo: "/placeholder.svg?height=300&width=500",
-      features: ["Two-player gameplay","Graphical chessboard","Move validation","AI opponent","Customizable themes","Move history tracking","Online multiplayer","Checkmate detection"]
+      name: "JavaScript",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/javascript.svg",
+      color: "text-yellow-400",
+      bgColor: "bg-yellow-500/20"
     },
     {
-      id: 4,
-      title: "Barter System",
-      description: "The Barter System is a skills swap platform where users exchange expertise and services directly, fostering a collaborative community without monetary transactions.",
-      longDescription: "The Barter System is a unique platform that enables user to exchange skills and services directly, eliminating the need for money. Users can offer their expertise in exchange for services they need, creating a community-driven economy based on trust and collaboration.",
-      tech: ["javascript", "React.js", "Node.js", "Express.js", "mongoDB","tailwindcss"],
-      githubUrl: "https://github.com/ayushbhardwaj683",
-      demoVideo: "/placeholder.svg?height=300&width=500",
-     features: ["User profile creation",  "Skill matching algorithm",  "Direct skill exchange",  "Real-time messaging",  "Point-based system",  "Secure user authentication",  "Community-driven learning",  "Skill swap requests"]
+      name: "TailwindCSS",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/tailwindcss.svg",
+      color: "text-teal-400",
+      bgColor: "bg-teal-500/20"
     },
+    {
+      name: "Node.js",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nodedotjs.svg",
+      color: "text-green-400",
+      bgColor: "bg-green-500/20"
+    },
+    {
+      name: "MongoDB",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mongodb.svg",
+      color: "text-green-400",
+      bgColor: "bg-green-500/20"
+    },
+    {
+      name: "SQL",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mysql.svg",
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/20"
+    },
+    {
+      name: "React",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/react.svg",
+      color: "text-cyan-400",
+      bgColor: "bg-cyan-500/20"
+    },
+    {
+      name: "Next.js",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nextdotjs.svg",
+      color: "text-gray-400",
+      bgColor: "bg-gray-500/20"
+    },
+    {
+      name: "TypeScript",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/typescript.svg",
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/20"
+    },
+    {
+      name: "Express.js",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/express.svg",
+      color: "text-purple-400",
+      bgColor: "bg-purple-500/20"
+    },
+    {
+      name: "Python",
+      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg",
+      color: "text-yellow-400",
+      bgColor: "bg-yellow-500/20"
+    }
   ]
 
-  const ProjectModal = ({ project, onClose }: { project: Project, onClose: () => void }) => (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-gradient-to-br from-gray-900 to-black border border-cyan-500/30 rounded-2xl max-w-4xl max-h-[90vh] overflow-y-auto m-4 transform animate-modal-enter">
-        <div className="p-8">
-          <div className="flex justify-between items-start mb-6">
-            <h3 className="text-3xl font-bold text-white">{project.title}</h3>
-            <button 
-              onClick={onClose}
-              className="p-2 rounded-full bg-red-500/20 hover:bg-red-500/40 transition-colors"
-            >
-              <X className="w-6 h-6 text-red-400" />
-            </button>
-          </div>
+  
+  const projects: Project[] = [
+  {
+    id: 1,
+    title: "Barter System",
+    description:
+      "A skill swap platform where users exchange expertise and services directly, fostering a collaborative community without monetary transactions.",
+    longDescription:
+      "A unique platform that enables users to exchange skills and services directly, eliminating the need for money. Users can offer their expertise in exchange for services they need, creating a community-driven economy based on trust and collaboration.",
+    tech: ["Node.js", "React", "Tailwind CSS", "Next.js", "MongoDB", "TypeScript"],
+    githubUrl: "https://github.com/ayushbhardwaj683",
+    features: [
+      "User profile creation",
+      "Skill matching algorithm",
+      "Direct skill exchange",
+      "Real-time messaging",
+      "Secure authentication",
+      "Community-driven learning",
+    ],
+  },
+  {
+    id: 2,
+    title: "E-com API",
+    description:
+      "A backend e-commerce API built with Node.js and Express, providing secure endpoints for managing products, users, orders, and authentication.",
+    longDescription:
+      "A scalable and secure e-commerce backend API built using Node.js and Express. It supports authentication, product management, order processing, and role-based access control using JWT.",
+    tech: ["Node.js", "Express.js", "MongoDB", "JWT", "Socket.io"],
+    githubUrl: "https://github.com/ayushbhardwaj683",
+    features: [
+      "Product catalog management",
+      "Order processing",
+      "JWT authentication",
+      "Role-based access control",
+      "Inventory tracking",
+      "Secure API endpoints",
+    ],
+  },
+  {
+    id: 3,
+    title: "Chess Game",
+    description:
+      "An interactive chess game allowing users to play, track moves, and experience classic chess logic.",
+    longDescription:
+      "A real-time chess game with multiplayer support, move validation, and a clean UI. Users can play against friends or AI with complete rule enforcement.",
+    tech: ["Node.js", "Express.js", "MongoDB", "JWT"],
+    githubUrl: "https://github.com/ayushbhardwaj683",
+    features: [
+      "Two-player gameplay",
+      "Move validation",
+      "AI opponent",
+      "Move history tracking",
+      "Checkmate detection",
+      "Online multiplayer",
+    ],
+  },
+];
+
+
+  
+  const ProjectModal = ({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) => (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-gray-900 to-black border border-cyan-500/30 rounded-2xl max-w-4xl max-h-[90vh] overflow-y-auto m-4 animate-modal-enter">
+      <div className="p-8">
+        
+        {/* Header */}
+        <div className="flex justify-between items-start mb-8">
+          <h3 className="text-3xl font-bold text-white">
+            {project.title}
+          </h3>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full bg-red-500/20 hover:bg-red-500/40 transition-colors"
+          >
+            <X className="w-6 h-6 text-red-400" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="grid md:grid-cols-2 gap-10">
           
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <img 
-                src={project.demoVideo || "/placeholder.svg"} 
-                alt={project.title}
-                className="w-full rounded-lg border border-cyan-500/30"
-              />
-              <div className="flex gap-4 mt-4">
-                <Button className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                  <Play className="w-4 h-4 mr-2" />
-                  Watch Demo
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="flex-1 border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10"
-                  onClick={() => window.open(project.githubUrl, '_blank')}
-                >
-                  <Github className="w-4 h-4 mr-2" />
-                  View Code
-                </Button>
-              </div>
+          {/* Left */}
+          <div>
+            <p className="text-gray-300 leading-relaxed mb-8">
+              {project.longDescription}
+            </p>
+
+            <Button
+              variant="outline"
+              className="w-full border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10"
+              onClick={() => window.open(project.githubUrl, "_blank")}
+            >
+              <Github className="w-4 h-4 mr-2" />
+              View Source Code
+            </Button>
+          </div>
+
+          {/* Right */}
+          <div>
+            <div className="mb-8">
+              <h4 className="text-xl font-semibold text-cyan-400 mb-4">
+                Key Features
+              </h4>
+              <ul className="space-y-3">
+                {project.features.map((feature, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center text-gray-300"
+                  >
+                    <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </div>
-            
+
             <div>
-              <p className="text-gray-300 mb-6 leading-relaxed">{project.longDescription}</p>
-              
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold text-cyan-400 mb-3">Key Features</h4>
-                <ul className="space-y-2">
-                  {project.features.map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center text-gray-300">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <h4 className="text-xl font-semibold text-cyan-400 mb-3">Technologies</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech: string) => (
-                    <Badge key={tech} className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border-purple-500/30">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
+              <h4 className="text-xl font-semibold text-cyan-400 mb-4">
+                Technologies
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((tech) => (
+                  <Badge
+                    key={tech}
+                    className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border-purple-500/30"
+                  >
+                    {tech}
+                  </Badge>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  </div>
+);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white relative overflow-hidden">
-    
-      <div 
+
+      <div
         ref={cursorRef}
         className="fixed w-6 h-6 pointer-events-none z-50 mix-blend-difference"
         style={{ transform: 'translate(-50%, -50%)' }}
@@ -328,8 +361,8 @@ export default function FuturisticPortfolio() {
         <div className="absolute inset-0 w-full h-full bg-cyan-400 rounded-full animate-ping"></div>
       </div>
 
-      
-      <canvas 
+
+      <canvas
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none opacity-30"
         style={{ zIndex: 1 }}
@@ -347,11 +380,10 @@ export default function FuturisticPortfolio() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`capitalize transition-all duration-300 text-lg relative ${
-                    activeSection === section 
-                      ? "text-cyan-400 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-cyan-400 after:to-purple-400" 
+                  className={`capitalize transition-all duration-300 text-lg relative ${activeSection === section
+                      ? "text-cyan-400 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-cyan-400 after:to-purple-400"
                       : "text-gray-300 hover:text-cyan-400"
-                  }`}
+                    }`}
                 >
                   {section === "skills" ? "Expertise" : section}
                 </button>
@@ -361,69 +393,65 @@ export default function FuturisticPortfolio() {
         </div>
       </nav>
 
-      {/* About Me Section */}
+{/* About me  */}
       <section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-6 relative z-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div className={`space-y-8 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-          }`}>
+          <div className={`space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            }`}>
             <div className="space-y-4">
-              <h1 className="text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight">
+              
+              <h1 className="text-6xl lg:text-8xl font-bold bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 bg-clip-text text-transparent leading-tight">
                 AYUSH
                 <br />
                 BHARDWAJ
               </h1>
               <div className="text-2xl text-gray-300 font-light">
-                Backend Developer
+                Fullstack Developer
               </div>
             </div>
-            
             <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
-            
             <div className="space-y-6 text-gray-300 text-lg leading-relaxed max-w-2xl">
-              <p className="text-xl text-cyan-300">
+              <p >
                 I'm someone who learns best by doing — quietly building, experimenting, and digging deeper than what's immediately visible.
               </p>
-              
               <p>
                 I'm drawn to systems that are elegant in their logic, solutions that genuinely solve problems, and challenges that demand more than a quick fix. I find joy in connecting the dots — between ideas, technologies, and people.
               </p>
-              
               <p>
                 Over time, I've developed expertise in backend development and full-stack engineering — areas where building reliable, thoughtful infrastructure matters just as much as the interface users see.
               </p>
             </div>
-            
-            
           </div>
-          
-          <div className={`relative transition-all duration-1000 delay-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}>
-            <div className="relative w-96 h-96 mx-auto">
+          <div className={`relative transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+            {<div className="relative w-96 h-96 mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute inset-4 bg-gradient-to-br from-gray-800 to-black rounded-full border border-cyan-500/30 flex items-center justify-center">
-                <div className="text-8xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                  A
-                </div>
+              <div className="relative w-80 h-80 mx-auto rounded-full overflow-hidden border-4 border-cyan-400/40 shadow-xl">
+
+                <img
+                  src="/ayush.png"
+                  alt="Ayush Bhardwaj"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="absolute -top-4 -right-4 w-8 h-8 bg-cyan-400 rounded-full animate-bounce"></div>
               <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-400 rounded-full animate-bounce delay-300"></div>
-            </div>
+            </div>}
           </div>
         </div>
       </section>
 
-      {/* Technical Expertise Section */}
+
+      {/* Technical  Section */}
       <section id="skills" className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {skills.map((skill, index) => (
-              <div 
+              <div
                 key={skill.name}
                 className="group perspective-1000 cursor-pointer"
                 style={{
@@ -444,55 +472,55 @@ export default function FuturisticPortfolio() {
               </div>
             ))}
           </div>
-          
-         
 
-  
-  
-    <div>
-      <h3 className="text-4xl font-semibold mb-12 text-center bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-        Technologies I Master
-      </h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {technologies.map((tech, index) => (
-          <div
-            key={tech.name}
-            className={`${tech.bgColor} rounded-2xl p-6 text-center hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-cyan-500/50 backdrop-blur-sm group`}
-            style={{
-              animationDelay: `${index * 50}ms`,
-              animation: isVisible ? 'fadeInScale 0.6s ease-out forwards' : 'none'
-            }}
-          >
-            <div className="mb-3 group-hover:scale-125 transition-transform duration-300">
-              <img
-                src={tech.logo}
-                alt={`${tech.name} logo`}
-                className="h-10 w-10 mx-auto"
-                style={{ filter: "invert(1)" }} 
-              />
+
+
+
+
+          <div>
+            <h3 className="text-4xl font-semibold mb-12 text-center bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              Technologies I've Worked with
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+              {technologies.map((tech, index) => (
+                <div
+                  key={tech.name}
+                  className={`${tech.bgColor} rounded-2xl p-6 text-center hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-cyan-500/50 backdrop-blur-sm group`}
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                    animation: isVisible ? 'fadeInScale 0.6s ease-out forwards' : 'none'
+                  }}
+                >
+                  <div className="mb-3 group-hover:scale-125 transition-transform duration-300">
+                    <img
+                      src={tech.logo}
+                      alt={`${tech.name} logo`}
+                      className="h-10 w-10 mx-auto"
+                      style={{ filter: "invert(1)" }}
+                    />
+                  </div>
+                  <p className={`text-sm font-medium ${tech.color} group-hover:text-white transition-colors`}>
+                    {tech.name}
+                  </p>
+                </div>
+              ))}
             </div>
-            <p className={`text-sm font-medium ${tech.color} group-hover:text-white transition-colors`}>
-              {tech.name}
-            </p>
           </div>
-        ))}
-      </div>
-    </div>
-  
+
 
         </div>
       </section>
 
       {/*  Projects Section */}
-      <section id="projects" className="py-32 px-6 relative z-10">
+      {/* <section id="projects" className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
             Featured Projects
           </h2>
-          
+
           <div className="grid lg:grid-cols-2 gap-12">
             {projects.map((project, index) => (
-              <div 
+              <div
                 key={project.id}
                 className="group perspective-1000 cursor-pointer"
                 style={{
@@ -503,14 +531,14 @@ export default function FuturisticPortfolio() {
               >
                 <Card className="bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 transform-gpu group-hover:rotateY-6 group-hover:scale-105 backdrop-blur-sm hover:shadow-2xl hover:shadow-purple-500/25 overflow-hidden">
                   <div className="relative">
-                    <img 
-                      src={project.demoVideo || "/placeholder.svg"} 
+                    <img
+                      src={project.demoVideo || "/placeholder.svg"}
                       alt={project.title}
                       className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div className="absolute top-4 right-4">
-                      <a 
+                      <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -521,7 +549,7 @@ export default function FuturisticPortfolio() {
                       </a>
                     </div>
                   </div>
-                  
+
                   <CardContent className="p-8">
                     <CardTitle className="text-2xl text-white group-hover:text-cyan-400 transition-colors duration-300 mb-4">
                       {project.title}
@@ -546,7 +574,79 @@ export default function FuturisticPortfolio() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <section id="projects" className="py-32 px-6 relative z-10">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+      Featured Projects
+    </h2>
+
+    <div className="grid lg:grid-cols-2 gap-12">
+      {projects.map((project, index) => (
+        <div
+          key={project.id}
+          className="group perspective-1000 cursor-pointer"
+          style={{
+            animationDelay: `${index * 200}ms`,
+            animation: isVisible ? "fadeInUp 1s ease-out forwards" : "none",
+          }}
+          onClick={() => setSelectedProject(project)}
+        >
+          <Card className="h-full bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 transform-gpu group-hover:rotateY-3 group-hover:scale-105 backdrop-blur-sm hover:shadow-2xl hover:shadow-purple-500/25 rounded-2xl">
+            
+            {/* Card Content */}
+            <CardContent className="p-8 flex flex-col h-full">
+              
+              {/* Header: Title + GitHub */}
+              <div className="flex items-start justify-between mb-6">
+                <CardTitle className="text-2xl text-white group-hover:text-cyan-400 transition-colors duration-300">
+                  {project.title}
+                </CardTitle>
+
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-black/40 hover:bg-cyan-500/20 transition-all duration-300 border border-cyan-500/30"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Github className="w-5 h-5 text-cyan-400" />
+                </a>
+              </div>
+
+              {/* Description */}
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                {project.description}
+              </p>
+
+              {/* Tech Stack */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tech.map((tech) => (
+                  <Badge
+                    key={tech}
+                    className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border-cyan-500/30 hover:border-cyan-500/50 transition-colors"
+                  >
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Spacer pushes button to bottom */}
+              <div className="flex-grow" />
+
+              {/* View Details Button */}
+              <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-300 rounded-full">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Details
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Contact Section */}
       <section id="contact" className="py-32 px-6 relative z-10">
@@ -557,31 +657,31 @@ export default function FuturisticPortfolio() {
           <p className="text-xl text-gray-300 mb-12">
             Ready to turn ideas into reality? Let's connect and create.
           </p>
-          
+
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-sm">
               <Mail className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
               <p className="text-gray-300">ayush406bhardwaj@gmail.com</p>
             </div>
-            
+
             <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-sm">
               <Github className="w-12 h-12 text-purple-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">GitHub</h3>
               <p className="text-gray-300">@ayushbhardwaj683</p>
             </div>
-            
+
             <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 backdrop-blur-sm">
               <Linkedin className="w-12 h-12 text-pink-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">LinkedIn
-                
+
               </h3>
               <p className="text-gray-300">Connect with me</p>
             </div>
           </div>
-          
+
           <div className="flex justify-center space-x-6">
-            <a 
+            <a
               href="https://github.com/ayushbhardwaj683"
               target="_blank"
               rel="noopener noreferrer"
@@ -589,8 +689,8 @@ export default function FuturisticPortfolio() {
             >
               <Github className="w-6 h-6 text-white" />
             </a>
-            
-            <a 
+
+            <a
               href="https://www.linkedin.com/in/ayush-bhardwaj-1b0215254/"
               target="_blank"
               rel="noopener noreferrer"
@@ -598,8 +698,8 @@ export default function FuturisticPortfolio() {
             >
               <Linkedin className="w-6 h-6 text-white" />
             </a>
-            
-            <a 
+
+            <a
               href="https://x.com/bhardwaj683"
               target="_blank"
               rel="noopener noreferrer"
@@ -607,8 +707,8 @@ export default function FuturisticPortfolio() {
             >
               <Twitter className="w-6 h-6 text-white" />
             </a>
-            
-            <a 
+
+            <a
               href="https://leetcode.com/u/bhardwaj683/"
               target="_blank"
               rel="noopener noreferrer"
@@ -616,15 +716,15 @@ export default function FuturisticPortfolio() {
             >
               <Code className="w-6 h-6 text-white" />
             </a>
-            
-            <a 
+
+            <a
               href="mailto:ayush406bhardwaj@gmail.com"
               className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-green-500 hover:to-emerald-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-green-500/25"
             >
               <Mail className="w-6 h-6 text-white" />
             </a>
-            
-            <a 
+
+            <a
               href="tel:+916203764676"
               className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-indigo-500/25"
             >
@@ -645,9 +745,9 @@ export default function FuturisticPortfolio() {
 
       {/* Project Modal */}
       {selectedProject && (
-        <ProjectModal 
-          project={selectedProject} 
-          onClose={() => setSelectedProject(null)} 
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
         />
       )}
 
