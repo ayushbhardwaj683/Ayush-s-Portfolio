@@ -445,7 +445,7 @@ export default function FuturisticPortfolio() {
       </nav>
 
       {/* About me  */}
-      <section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-6 relative z-10">
+      {/* <section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-6 relative z-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div className={`space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
             }`}>
@@ -453,8 +453,6 @@ export default function FuturisticPortfolio() {
 
               <h1 className="text-6xl lg:text-8xl font-bold bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 bg-clip-text text-transparent leading-tight">
                 AYUSH
-                <br />
-                BHARDWAJ
               </h1>
               <div className="text-2xl text-gray-300 font-light">
                 Fullstack Developer
@@ -490,8 +488,60 @@ export default function FuturisticPortfolio() {
             </div>}
           </div>
         </div>
-      </section>
+      </section> */}
+<section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-4 sm:px-6 relative z-10">
+  <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    
+    {/* Text Content */}
+    <div className={`space-y-6 md:space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+      <div className="space-y-2 md:space-y-4 text-center lg:text-left">
+        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 bg-clip-text text-transparent leading-tight">
+          AYUSH
+        </h1>
+        <div className="text-xl sm:text-2xl text-gray-300 font-light">
+          Fullstack Developer
+        </div>
+      </div>
+      
+      {/* Decorative Line - centered on mobile, left on desktop */}
+      <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full mx-auto lg:mx-0"></div>
+      
+      <div className="space-y-4 sm:space-y-6 text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl text-center lg:text-left">
+        <p>
+          I&apos;m someone who learns best by doing — quietly building, experimenting, and digging deeper than what&apos;s immediately visible.
+        </p>
+        <p>
+          I&apos;m drawn to systems that are elegant in their logic, solutions that genuinely solve problems, and challenges that demand more than a quick fix. I find joy in connecting the dots — between ideas, technologies, and people.
+        </p>
+        <p>
+          Over time, I&apos;ve developed expertise in backend development and full-stack engineering — areas where building reliable, thoughtful infrastructure matters just as much as the interface users see.
+        </p>
+      </div>
+    </div>
 
+    {/* Image Content */}
+    <div className={`relative transition-all duration-1000 delay-500 mt-10 lg:mt-0 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+      {/* Container scales down on mobile (w-64) and back up on desktop (md:w-96) */}
+      <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        
+        {/* Inner image scales accordingly */}
+        <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-cyan-400/40 shadow-xl">
+          <img
+            src="/ayush.png"
+            alt="Ayush Bhardwaj"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Decorative bouncing dots */}
+        <div className="absolute top-0 right-0 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-cyan-400 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-0 left-0 sm:-bottom-4 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-purple-400 rounded-full animate-bounce delay-300"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
       {/* Technical  Section */}
       <section id="skills" className="py-32 px-6 relative z-10">
