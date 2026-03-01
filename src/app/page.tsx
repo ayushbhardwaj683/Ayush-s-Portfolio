@@ -270,6 +270,41 @@ export default function FuturisticPortfolio() {
         "Fast loading and optimized performance",
       ],
     },
+    {
+      id: 4,
+      title: "Chat Application",
+      description:
+        "A full-stack, real-time messaging application built to replicate the core functionalities and UI/UX of WhatsApp Web",
+      longDescription:
+        "A real-time chat application built with Next.js and Convex, designed to replicate the core functionalities and user experience of WhatsApp Web. It features instant messaging, group chats, and a sleek, responsive design.",
+      tech: ["Next.js", "Tailwind CSS", "React", "Convex(serverless)", "Clerk(Auth)"],
+      githubUrl: "https://github.com/ayushbhardwaj683/chat-application-web",
+      features: [
+        "Real-Time Database: Powered by Convex, messages appear instantly across clients without needing a browser refresh.",
+        "Typing Indicators: Real-time \"typing...\" status appears when the other user is typing and auto-clears after 2 seconds of inactivity",
+        "Group Chats: Create groups with multiple members, custom names, and view member counts in the sidebar",
+        
+      ],
+    },
+    {
+      id: 5,
+      title: "AI Assistant",
+      description:
+        "A full-stack AI-powered study assistant that transforms YouTube videos and PDF documents into interactive learning experiences",
+      longDescription:
+        "An AI-powered study assistant that converts YouTube videos and PDF documents into interactive learning experiences. It provides features like  generate flashcards, quizzes, and chat with the material using a Retrieval-Augmented Generation (RAG) pipeline.",
+      tech: ["Next.js", "Tailwind CSS", "React", "FAST Api's", "Python","Supabase"],
+      githubUrl: "https://github.com/ayushbhardwaj683/ai-assistant",
+      features: [
+        "User Authentication",
+        "Multimodal Input",
+        "Vector Search (RAG)",
+        "AI Chat Tutoring",
+        "Flashcard Generation",
+        "Quiz Creation",
+        
+      ],
+    },
   ];
 
 
@@ -601,91 +636,90 @@ export default function FuturisticPortfolio() {
       </section>
 
 
-      {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Let&apos;s Build Something Amazing
-          </h2>
-          <p className="text-xl text-gray-300 mb-12">
-            Let&apos;s connect and create.
-          </p>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-sm">
-              <Mail className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
-              <p className="text-gray-300">ayush406bhardwaj@gmail.com</p>
-            </div>
+      <section id="contact" className="py-16 md:py-32 px-4 md:px-6 relative z-10">
+  <div className="max-w-4xl mx-auto text-center">
+    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+      Let&apos;s Build Something Amazing
+    </h2>
+    <p className="text-lg md:text-xl text-gray-300 mb-8 md:mb-12">
+      Let&apos;s connect and create.
+    </p>
 
-            <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-sm">
-              <Github className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">GitHub</h3>
-              <p className="text-gray-300">@ayushbhardwaj683</p>
-            </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-16">
+      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-sm">
+        <Mail className="w-8 h-8 md:w-12 md:h-12 text-cyan-400 mx-auto mb-4" />
+        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">Email</h3>
+        <p className="text-sm md:text-base text-gray-300 break-all">ayush406bhardwaj@gmail.com</p>
+      </div>
 
-            <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-8 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 backdrop-blur-sm">
-              <Linkedin className="w-12 h-12 text-pink-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">LinkedIn
+      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-sm">
+        <Github className="w-8 h-8 md:w-12 md:h-12 text-purple-400 mx-auto mb-4" />
+        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">GitHub</h3>
+        <p className="text-sm md:text-base text-gray-300">@ayushbhardwaj683</p>
+      </div>
 
-              </h3>
-              <p className="text-gray-300">Connect with me</p>
-            </div>
-          </div>
+      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 backdrop-blur-sm sm:col-span-2 md:col-span-1">
+        <Linkedin className="w-8 h-8 md:w-12 md:h-12 text-pink-400 mx-auto mb-4" />
+        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">LinkedIn</h3>
+        <p className="text-sm md:text-base text-gray-300">Connect with me</p>
+      </div>
+    </div>
 
-          <div className="flex justify-center space-x-6">
-            <a
-              href="https://github.com/ayushbhardwaj683"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-cyan-500/25"
-            >
-              <Github className="w-6 h-6 text-white" />
-            </a>
+    {/* Socials Container */}
+    <div className="flex flex-wrap justify-center gap-3 md:gap-0 md:space-x-6">
+      <a
+        href="https://github.com/ayushbhardwaj683"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-cyan-500/25"
+      >
+        <Github className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
 
-            <a
-              href="https://www.linkedin.com/in/ayush-bhardwaj-1b0215254/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-blue-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-blue-500/25"
-            >
-              <Linkedin className="w-6 h-6 text-white" />
-            </a>
+      <a
+        href="https://www.linkedin.com/in/ayush-bhardwaj-1b0215254/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-blue-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-blue-500/25"
+      >
+        <Linkedin className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
 
-            <a
-              href="https://x.com/bhardwaj683"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-purple-500 hover:to-pink-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-purple-500/25"
-            >
-              <Twitter className="w-6 h-6 text-white" />
-            </a>
+      <a
+        href="https://x.com/bhardwaj683"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-purple-500 hover:to-pink-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-purple-500/25"
+      >
+        <Twitter className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
 
-            <a
-              href="https://leetcode.com/u/bhardwaj683/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-orange-500 hover:to-red-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-orange-500/25"
-            >
-              <Code className="w-6 h-6 text-white" />
-            </a>
+      <a
+        href="https://leetcode.com/u/bhardwaj683/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-orange-500 hover:to-red-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-orange-500/25"
+      >
+        <Code className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
 
-            <a
-              href="mailto:ayush406bhardwaj@gmail.com"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-green-500 hover:to-emerald-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-green-500/25"
-            >
-              <Mail className="w-6 h-6 text-white" />
-            </a>
+      <a
+        href="mailto:ayush406bhardwaj@gmail.com"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-green-500 hover:to-emerald-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-green-500/25"
+      >
+        <Mail className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
 
-            <a
-              href="tel:+916203764676"
-              className="p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-indigo-500/25"
-            >
-              <Phone className="w-6 h-6 text-white" />
-            </a>
-          </div>
-        </div>
-      </section>
+      <a
+        href="tel:+916203764676"
+        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-indigo-500/25"
+      >
+        <Phone className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </a>
+    </div>
+  </div>
+</section>
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-gray-700/50 bg-black/20 backdrop-blur-sm relative z-10">
