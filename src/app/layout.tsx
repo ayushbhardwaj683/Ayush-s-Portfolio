@@ -13,9 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ayush's Portfolio",
-  description: "Ayush | Portfolio",
+  title: "Ayush Kumar — Full-Stack Developer",
+  description:
+    "Portfolio of Ayush Kumar, an AI automation and full-stack developer building production workflows, reliable backends, and thoughtful interfaces.",
+  openGraph: {
+    title: "Ayush Kumar — Full-Stack Developer",
+    description: "Full-stack developer • Next.js, Node.js, React, Python.",
+    type: "website",
+  },
 };
+
+// Set the theme before paint so there's no flash of the wrong theme.
+const themeScript = `
+(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+`;
 
 export default function RootLayout({
   children,
@@ -23,10 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

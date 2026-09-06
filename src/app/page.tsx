@@ -1,851 +1,121 @@
+"use client";
 
+import { useState, useEffect, useRef, type ReactNode, type CSSProperties } from "react";
+import { ArrowUpRight, ArrowDown, ArrowUp, Github, Linkedin, Download, Moon, Sun, Menu, X, MapPin, Code2, Workflow, Database, Layers, GraduationCap, Search, Briefcase, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Chatbot from "@/components/Chatbot";
+import { profile, socials, stats, experiences, skillGroups, projects, projectFilters, type Project } from "@/lib/data";
 
-"use client"
+const NAV = ["home", "about", "experience", "projects", "skills", "education", "contact"];
+const skillIcons = [Workflow, Code2, Database, Layers];
 
-import { useState, useEffect, useRef } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Twitter, Code, Mail, Phone, ExternalLink, Server, Database, Globe, Terminal, Layers, Cloud, X, Play, Download } from 'lucide-react'
-
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  longDescription: string;
-  tech: string[];
-  githubUrl: string;
-  features: string[];
+function Reveal({ children, className = "", delay = 100 }: { children: ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Keep server-rendered content visible; stage only elements below the viewport.
+    if (element.getBoundingClientRect().top < window.innerHeight - 60) return;
+    element.classList.add("pending");
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { element.classList.replace("pending", "shown"); observer.unobserve(element); }
+    }, { threshold: 0.08, rootMargin: "0px 0px -65px 0px" });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={ref} className={`reveal ${className}`} style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}>{children}</div>;
 }
 
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
+function Modal({ children, title, onClose, className = "" }: { children: ReactNode; title: string; onClose: () => void; className?: string }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = ref.current;
+    const overflow = document.body.style.overflow;
+    dialog?.showModal(); document.body.style.overflow = "hidden";
+    return () => { dialog?.close(); document.body.style.overflow = overflow; };
+  }, []);
+  return <dialog ref={ref} className={`dialog ${className}`} aria-label={title} onCancel={onClose} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onClose(); } }}>
+    <div className="dialog-header"><h2>{title}</h2><button className="icon-button" onClick={onClose} aria-label="Close dialog"><X /></button></div>{children}
+  </dialog>;
 }
 
-export default function FuturisticPortfolio() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [activeSection, setActiveSection] = useState("about")
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const cursorRef = useRef<HTMLDivElement>(null)
+export default function Portfolio() {
+  const [theme, setTheme] = useState("light");
+  const [active, setActive] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [filter, setFilter] = useState("All");
+  const [selected, setSelected] = useState<Project | null>(null);
+  const [palette, setPalette] = useState(false);
+  const [query, setQuery] = useState("");
+  const [recruiter, setRecruiter] = useState(false);
+  const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-      if (cursorRef.current) {
-        cursorRef.current.style.left = e.clientX + 'px'
-        cursorRef.current.style.top = e.clientY + 'px'
-      }
-    }
-
-
-    const canvas = canvasRef.current
-    if (canvas) {
-      const ctx = canvas.getContext('2d')
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-
-      const particles: Particle[] = []
-      const particleCount = 100
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.5 + 0.2
-        })
-      }
-
-      const animate = () => {
-        if (!ctx) return
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-        particles.forEach(particle => {
-          particle.x += particle.vx
-          particle.y += particle.vy
-
-          if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-          if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0, 255, 255, ${particle.opacity})`
-          ctx.fill()
-        })
-
-        requestAnimationFrame(animate)
-      }
-      animate()
-    }
-
-    const handleScroll = () => {
-      const sections = ["about", "skills", "projects", "contact"]
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("scroll", handleScroll)
-    window.addEventListener("resize", () => {
-      if (canvas) {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-      }
-    })
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
-  }
-
-  // Resume Download
-  const handleResumeDownload = () => {
-    window.open("/resume.pdf", "_blank");
+    setTheme(document.documentElement.dataset.theme || "light");
+    const onScroll = () => {
+      setShowTop(window.scrollY > 700);
+      let current = "home";
+      NAV.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 180) current = id; });
+      setActive(current);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPalette(v => !v); }
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("keydown", onKey); };
+  }, []);
+  const toggleTheme = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next); document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("theme", next); } catch { /* Storage is optional. */ }
   };
+  const navigate = (id: string) => { setMenuOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); };
+  const commands = [
+    ...NAV.map(id => ({ label: `Go to ${id}`, run: () => navigate(id) })),
+    { label: "View resume", run: () => window.open(profile.resumeUrl, "_blank", "noopener,noreferrer") },
+    { label: "Toggle color theme", run: toggleTheme },
+    { label: "Recruiter snapshot", run: () => setRecruiter(true) },
+    { label: "Open GitHub", run: () => window.open(socials.github, "_blank", "noopener,noreferrer") },
+    { label: "Open LinkedIn", run: () => window.open(socials.linkedin, "_blank", "noopener,noreferrer") },
+    { label: "Email Ayush", run: () => { window.location.href = `mailto:${profile.email}`; } },
+  ].filter(item => item.label.toLowerCase().includes(query.toLowerCase()));
+  const shown = (filter === "All" ? projects : projects.filter(p => p.category === filter)).slice().sort((a,b) => ([1,5,4,2,3].indexOf(a.id) - [1,5,4,2,3].indexOf(b.id)));
 
-  const skills = [
-    { name: "Backend Development", icon: Server, color: "from-cyan-400 to-blue-600", glowColor: "shadow-cyan-500/50" },
-    { name: "Frontend Development", icon: Terminal, color: "from-green-400 to-emerald-600", glowColor: "shadow-green-500/50" },
-    { name: "API Integration and Development", icon: Globe, color: "from-purple-400 to-pink-600", glowColor: "shadow-purple-500/50" },
-    { name: "Database Managment", icon: Database, color: "from-orange-400 to-red-600", glowColor: "shadow-orange-500/50" },
-    { name: "Data Integration", icon: Layers, color: "from-indigo-400 to-purple-600", glowColor: "shadow-indigo-500/50" },
-    { name: "UI/UX", icon: Cloud, color: "from-teal-400 to-cyan-600", glowColor: "shadow-teal-500/50" },
-  ]
+  return <>
+    <a className="skip-link" href="#home">Skip to content</a>
+    <header className="header"><div className="container nav-inner">
+      <a href="#home" className="logo" aria-label="Ayush Kumar home">AK<span>.</span></a>
+      <nav className="desktop-nav" aria-label="Main navigation">{NAV.map(id => <a key={id} href={`#${id}`} aria-current={active === id ? "location" : undefined} className={`nav-link ${active === id ? "active" : ""}`}>{id[0].toUpperCase() + id.slice(1)}</a>)}</nav>
+      <div className="nav-actions"><button className="icon-button" onClick={toggleTheme} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>{theme === "light" ? <Moon /> : <Sun />}</button><button className="icon-button menu-button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-nav" onClick={() => setMenuOpen(v => !v)}>{menuOpen ? <X /> : <Menu />}</button></div>
+    </div>{menuOpen && <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation">{NAV.map(id => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className={`nav-link ${active === id ? "active" : ""}`}>{id[0].toUpperCase() + id.slice(1)}</a>)}</nav>}</header>
+    <main>
+      <section id="home" className="hero container"><div className="hero-grid">
+        <div className="hero-enter"><div className="eyebrow">Ayush Kumar · Developer & builder</div><h1>Thoughtful code.<br /><span>Real-world impact.</span></h1><p className="hero-description">I build <strong>intelligent automations</strong> and <strong>full-stack experiences</strong> that turn complex problems into simple, useful software.</p><div className="hero-actions"><a className="primary-button" href="#projects">Explore my work <ArrowUpRight /></a><a href={profile.resumeUrl} className="text-link" download="Ayush_Kumar_Resume.pdf">Download résumé <Download /></a></div><div className="social-row"><a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><span className="social-divider" /><span className="location"><MapPin /> Based in India</span></div></div>
+        <div className="portrait-composition hero-enter"><div className="portrait-frame">
+          {/* The supplied portrait is framed with CSS, without altering the original. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={profile.avatar} alt="Ayush Kumar" width={1856} height={2304} fetchPriority="high" />
+          <div className="portrait-caption"><strong>A little curiosity. A lot of building.</strong><span>AI automation · Full-stack development</span></div></div><span className="photo-index" aria-hidden="true">THE PERSON BEHIND THE CODE / 2026</span><div className="status-card"><span className="status-dot" /><div>Currently building at The Elite Point<small>AI & Automation Intern</small></div></div></div>
+      </div><div className="hero-bottom"><a href="#about"><ArrowDown /> Scroll to get to know me</a><span>IDEA → BUILD → TEST → SHIP</span></div></section>
 
+      <section id="about" className="section"><div className="container"><div className="about-grid"><Reveal><div className="eyebrow">01 / A little about me</div><h2 className="about-title">Curiosity starts it.<br />Ownership ships it.<br /><span>Iteration makes it better.</span></h2></Reveal><Reveal className="body-copy" delay={180}><p>I’m Ayush, a <strong>BCA graduate and hands-on builder</strong> who enjoys taking a problem from the first question to software people actually use.</p><p>At The Elite Point, I turn time-consuming research into AI-powered workflows. Before that, I helped improve the security and reliability of a live healthcare platform at Avijo Healthcare.</p><p>I care about the whole loop: understanding the problem, defining the details, building, testing, and learning from what ships.</p></Reveal></div><Reveal><div className="metrics">{stats.map(s => <div className="metric" key={s.label}><strong>{s.value}</strong><span>{s.label}</span></div>)}</div></Reveal></div></section>
 
-  const technologies = [
-    {
-      name: "HTML",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/html5.svg",
-      color: "text-orange-400",
-      bgColor: "bg-orange-500/20"
-    },
-    {
-      name: "CSS",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/css3.svg",
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20"
-    },
-    {
-      name: "JavaScript",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/javascript.svg",
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/20"
-    },
-    {
-      name: "TailwindCSS",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/tailwindcss.svg",
-      color: "text-teal-400",
-      bgColor: "bg-teal-500/20"
-    },
-    {
-      name: "Node.js",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nodedotjs.svg",
-      color: "text-green-400",
-      bgColor: "bg-green-500/20"
-    },
-    {
-      name: "MongoDB",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mongodb.svg",
-      color: "text-green-400",
-      bgColor: "bg-green-500/20"
-    },
-    {
-      name: "SQL",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mysql.svg",
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20"
-    },
-    {
-      name: "React",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/react.svg",
-      color: "text-cyan-400",
-      bgColor: "bg-cyan-500/20"
-    },
-    {
-      name: "Next.js",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/nextdotjs.svg",
-      color: "text-gray-400",
-      bgColor: "bg-gray-500/20"
-    },
-    {
-      name: "TypeScript",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/typescript.svg",
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20"
-    },
-    {
-      name: "Express.js",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/express.svg",
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20"
-    },
-    {
-      name: "Python",
-      logo: "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg",
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/20"
-    }
-  ]
+      <section id="experience" className="section"><div className="container"><Reveal className="section-heading"><div><div className="eyebrow">02 / The journey so far</div><h2>Work that made a difference.</h2></div><p>Real teams, real problems, and a little more responsibility with every release.</p></Reveal><div className="experience-list">{experiences.map(exp => <Reveal key={exp.company} className="experience-row"><div className="experience-meta"><span className="period">{exp.period}</span><h3>{exp.company}</h3><p>{exp.location}</p>{exp.current && <span className="current-badge">● Currently here</span>}</div><div className="experience-content"><h4>{exp.role}</h4><ul>{exp.points.map(p => <li key={p}>{p}</li>)}</ul><div className="tags">{exp.stack.map(t => <span key={t} className="tag">{t}</span>)}</div></div></Reveal>)}</div></div></section>
 
+      <section id="projects" className="section projects-section"><div className="container"><Reveal className="section-heading"><div><div className="eyebrow">03 / Selected work</div><h2>Ideas, brought to life.</h2></div><a href={socials.github} target="_blank" rel="noreferrer" className="text-link">More on GitHub <ArrowUpRight /></a></Reveal><div className="project-filters" aria-label="Filter projects">{projectFilters.map(f => <button key={f} className="filter-button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === "All" ? "All projects" : f}</button>)}</div><div className="projects-grid">{shown.map((project, index) => <Reveal key={`${filter}-${project.id}`} delay={index % 2 ? 200 : 100}><article className="project-card"><div className="project-cover"><div className="project-cover-top"><span>PROJECT / 0{project.id}</span><Code2 size={18} /></div><div className="project-cover-title">{project.title}</div><div className="project-cover-bottom"><span>{project.id === 1 ? "PDF → a plan of action" : project.id === 5 ? "Your content. Connected knowledge." : project.id === 2 ? "Products. Orders. Secure APIs." : project.id === 4 ? "Conversations, in real time." : "A space for the things I build."}</span><ArrowUpRight size={20} /></div></div><div className="project-body"><div className="project-title-row"><h3>{project.title}</h3><a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`View ${project.title} source on GitHub`}><Github /></a></div><p>{project.description}</p><div className="tags">{project.tech.slice(0,4).map(t => <span className="tag" key={t}>{t}</span>)}</div><div className="project-footer"><button className="text-link" onClick={() => setSelected(project)}>Explore project <ArrowUpRight /></button><span className="project-category">{project.category}</span></div></div></article></Reveal>)}</div></div></section>
 
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "AI Study Planner",
-      description:
-        "A Full Stack AI-powered study planner project that helps students organize their learning schedules and track progress.",
-      longDescription:
-        "An intelligent study planning tool that uses AI to recommend optimal study schedules based on user goals, available time, and learning preferences. It helps students stay organized and make the most of their study time.",
-      tech: ["Node.js", "React", "Tailwind CSS", "Lucide React", "MongoDB", "Express.js", "JavaScript"],
-      githubUrl: "https://github.com/ayushbhardwaj683/AI-Study-Planner",
-      features: [
-        "Instantly converts PDF syllabus files into structured, actionable weekly roadmaps using Gemini AI.",
-        "Customizes study plans based on your daily availability and target completion deadline to ensure you finish on time.",
-        "Visualizes your performance with interactive dashboards and detailed analytics",
-        "Provides dynamic AI-driven feedback",
-      ],
-    },
-    {
-      id: 2,
-      title: "E-com API",
-      description:
-        "A backend e-commerce API built with Node.js and Express, providing secure endpoints for managing products, users, orders, and authentication.",
-      longDescription:
-        "A scalable and secure e-commerce backend API built using Node.js and Express. It supports authentication, product management, order processing, and role-based access control using JWT.",
-      tech: ["Node.js", "Express.js", "MongoDB", "JWT", "Socket.io"],
-      githubUrl: "https://github.com/ayushbhardwaj683/ECOM-API",
-      features: [
-        "Product catalog management",
-        "Order processing",
-        "JWT authentication",
-        "Role-based access control",
-        "Inventory tracking",
-        "Secure API endpoints",
-      ],
-    },
-    {
-      id: 3,
-      title: "My Portfolio",
-      description:
-        "My personal portfolio website showcasing my skills, projects, and experience as a full-stack developer.",
-      longDescription:
-        "A modern and responsive personal portfolio website built with Next.js and Tailwind CSS. It highlights my skills, projects, and experience as a full-stack developer, with smooth animations and an interactive design.",
-      tech: ["Next.js", "Tailwind CSS", "TypeScript", "ESLint", "Framer Motion",],
-      githubUrl: "https://github.com/ayushbhardwaj683/Ayush-s-Portfolio",
-      features: [
-        "Explains my skills and expertise",
-        "Showcases my projects and experience",
-        "Responsive design for all devices",
-        "Interactive UI with animations",
-        "Fast loading and optimized performance",
-      ],
-    },
-    {
-      id: 4,
-      title: "Chat Application",
-      description:
-        "A full-stack, real-time messaging application built to replicate the core functionalities and UI/UX of WhatsApp Web",
-      longDescription:
-        "A real-time chat application built with Next.js and Convex, designed to replicate the core functionalities and user experience of WhatsApp Web. It features instant messaging, group chats, and a sleek, responsive design.",
-      tech: ["Next.js", "Tailwind CSS", "React", "Convex(serverless)", "Clerk(Auth)"],
-      githubUrl: "https://github.com/ayushbhardwaj683/chat-application-web",
-      features: [
-        "Real-Time Database: Powered by Convex, messages appear instantly across clients without needing a browser refresh.",
-        "Typing Indicators: Real-time \"typing...\" status appears when the other user is typing and auto-clears after 2 seconds of inactivity",
-        "Group Chats: Create groups with multiple members, custom names, and view member counts in the sidebar",
-        
-      ],
-    },
-    {
-      id: 5,
-      title: "AI Assistant",
-      description:
-        "A full-stack AI-powered study assistant that transforms YouTube videos and PDF documents into interactive learning experiences",
-      longDescription:
-        "An AI-powered study assistant that converts YouTube videos and PDF documents into interactive learning experiences. It provides features like  generate flashcards, quizzes, and chat with the material using a Retrieval-Augmented Generation (RAG) pipeline.",
-      tech: ["Next.js", "Tailwind CSS", "React", "FAST Api's", "Python","Supabase"],
-      githubUrl: "https://github.com/ayushbhardwaj683/ai-assistant",
-      features: [
-        "User Authentication",
-        "Multimodal Input",
-        "Vector Search (RAG)",
-        "AI Chat Tutoring",
-        "Flashcard Generation",
-        "Quiz Creation",
-        
-      ],
-    },
-  ];
+      <section id="skills" className="section"><div className="container"><Reveal className="section-heading"><div><div className="eyebrow">04 / My toolkit</div><h2>The right tools. Thoughtfully used.</h2></div><p>From the first spec to the final API call, a practical toolkit for getting things done.</p></Reveal><div className="skills-grid">{skillGroups.map((group, i) => { const Icon = skillIcons[i % skillIcons.length]; return <Reveal className="skill-group" key={group.title} delay={i % 2 ? 180 : 100}><div className="skill-heading"><Icon /><h3>{group.title}</h3></div><div className="tags">{group.skills.map(s => <span key={s} className="tag">{s}</span>)}</div></Reveal>; })}</div></div></section>
 
+      <section id="education" className="section"><div className="container"><Reveal className="section-heading"><div><div className="eyebrow">05 / The foundation</div><h2>Always a student.</h2></div></Reveal><Reveal className="education-card"><div className="education-meta"><GraduationCap />AUG 2023 — AUG 2026</div><div><h3>Bachelor of Computer Applications</h3><p>Dehradun Institute of Technology University · Dehradun</p><span className="tag">CGPA 7.02</span><p className="education-note"><strong>Technical Member, IEEE Student Branch</strong><br />Organised technical events, workshops, and hackathons across teams.</p></div></Reveal></div></section>
 
-
-  const ProjectModal = ({
-    project,
-    onClose,
-  }: {
-    project: Project;
-    onClose: () => void;
-  }) => (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-gradient-to-br from-gray-900 to-black border border-cyan-500/30 rounded-2xl max-w-4xl max-h-[90vh] overflow-y-auto m-4 animate-modal-enter">
-        <div className="p-8">
-
-          <div className="flex justify-between items-start mb-8">
-            <h3 className="text-3xl font-bold text-white">
-              {project.title}
-            </h3>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-full bg-red-500/20 hover:bg-red-500/40 transition-colors"
-            >
-              <X className="w-6 h-6 text-red-400" />
-            </button>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-10">
-
-            <div>
-              <p className="text-gray-300 leading-relaxed mb-8">
-                {project.longDescription}
-              </p>
-
-              <Button
-                variant="outline"
-                className="w-full border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10"
-                onClick={() => window.open(project.githubUrl, "_blank")}
-              >
-                <Github className="w-4 h-4 mr-2" />
-                View Source Code
-              </Button>
-            </div>
-
-            <div>
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-cyan-400 mb-4">
-                  Key Features
-                </h4>
-                <ul className="space-y-3">
-                  {project.features.map((feature, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center text-gray-300"
-                    >
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-semibold text-cyan-400 mb-4">
-                  Technologies
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <Badge
-                      key={tech}
-                      className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border-purple-500/30"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white relative overflow-hidden">
-
-      <div
-        ref={cursorRef}
-        className="fixed w-6 h-6 pointer-events-none z-50 mix-blend-difference"
-        style={{ transform: 'translate(-50%, -50%)' }}
-      >
-        <div className="w-full h-full bg-cyan-400 rounded-full opacity-80 animate-pulse"></div>
-        <div className="absolute inset-0 w-full h-full bg-cyan-400 rounded-full animate-ping"></div>
-      </div>
-
-
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 pointer-events-none opacity-30"
-        style={{ zIndex: 1 }}
-      />
-
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/20 backdrop-blur-md border-b border-cyan-500/20">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              Ayush&apos;s Portfolio
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              {["about", "skills", "projects", "contact"].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`capitalize transition-all duration-300 text-lg relative ${activeSection === section
-                      ? "text-cyan-400 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-cyan-400 after:to-purple-400"
-                      : "text-gray-300 hover:text-cyan-400"
-                    }`}
-                >
-                  {section === "skills" ? "Expertise" : section}
-                </button>
-              ))}
-
-              {/* Resume Download */}
-              <button
-                onClick={handleResumeDownload}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/40 text-cyan-400 hover:from-cyan-500/20 hover:to-purple-500/20 hover:scale-105 transition-all duration-300 group"
-              >
-                <Download className="w-4 h-4 group-hover:animate-bounce" />
-                <span className="text-sm font-medium">Resume</span>
-              </button>
-
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* About me  */}
-      {/* <section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div className={`space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-            }`}>
-            <div className="space-y-4">
-
-              <h1 className="text-6xl lg:text-8xl font-bold bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 bg-clip-text text-transparent leading-tight">
-                AYUSH
-              </h1>
-              <div className="text-2xl text-gray-300 font-light">
-                Fullstack Developer
-              </div>
-            </div>
-            <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
-            <div className="space-y-6 text-gray-300 text-lg leading-relaxed max-w-2xl">
-              <p >
-                I&apos;m someone who learns best by doing — quietly building, experimenting, and digging deeper than what&apos;s immediately visible.
-              </p>
-              <p>
-                I&apos;m drawn to systems that are elegant in their logic, solutions that genuinely solve problems, and challenges that demand more than a quick fix. I find joy in connecting the dots — between ideas, technologies, and people.
-              </p>
-              <p>
-                Over time, I&apos;ve developed expertise in backend development and full-stack engineering — areas where building reliable, thoughtful infrastructure matters just as much as the interface users see.
-              </p>
-            </div>
-          </div>
-          <div className={`relative transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}>
-            {<div className="relative w-96 h-96 mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-              <div className="relative w-80 h-80 mx-auto rounded-full overflow-hidden border-4 border-cyan-400/40 shadow-xl">
-
-                <img
-                  src="/ayush.png"
-                  alt="Ayush Bhardwaj"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-cyan-400 rounded-full animate-bounce"></div>
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-400 rounded-full animate-bounce delay-300"></div>
-            </div>}
-          </div>
-        </div>
-      </section> */}
-<section id="about" className="min-h-screen flex items-center pt-20 pb-20 px-4 sm:px-6 relative z-10">
-  <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-    
-    {/* Text Content */}
-    <div className={`space-y-6 md:space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-      <div className="space-y-2 md:space-y-4 text-center lg:text-left">
-        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 bg-clip-text text-transparent leading-tight">
-          AYUSH
-        </h1>
-        <div className="text-xl sm:text-2xl text-gray-300 font-light">
-          Fullstack Developer
-        </div>
-      </div>
-      
-      {/* Decorative Line - centered on mobile, left on desktop */}
-      <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full mx-auto lg:mx-0"></div>
-      
-      <div className="space-y-4 sm:space-y-6 text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl text-center lg:text-left">
-        <p>
-          I&apos;m someone who learns best by doing — quietly building, experimenting, and digging deeper than what&apos;s immediately visible.
-        </p>
-        <p>
-          I&apos;m drawn to systems that are elegant in their logic, solutions that genuinely solve problems, and challenges that demand more than a quick fix. I find joy in connecting the dots — between ideas, technologies, and people.
-        </p>
-        <p>
-          Over time, I&apos;ve developed expertise in backend development and full-stack engineering — areas where building reliable, thoughtful infrastructure matters just as much as the interface users see.
-        </p>
-      </div>
-    </div>
-
-    {/* Image Content */}
-    <div className={`relative transition-all duration-1000 delay-500 mt-10 lg:mt-0 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-      {/* Container scales down on mobile (w-64) and back up on desktop (md:w-96) */}
-      <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        
-        {/* Inner image scales accordingly */}
-        <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-cyan-400/40 shadow-xl">
-          <img
-            src="/ayush.png"
-            alt="Ayush Bhardwaj"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        {/* Decorative bouncing dots */}
-        <div className="absolute top-0 right-0 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-cyan-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-0 left-0 sm:-bottom-4 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-purple-400 rounded-full animate-bounce delay-300"></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-      {/* Technical  Section */}
-      <section id="skills" className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Technical Expertise
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="group perspective-1000 cursor-pointer"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                  animation: isVisible ? 'fadeInUp 0.8s ease-out forwards' : 'none'
-                }}
-              >
-                <Card className={`bg-gradient-to-br from-gray-900/50 to-black/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-500 transform-gpu group-hover:rotateY-12 group-hover:rotateX-6 group-hover:scale-105 backdrop-blur-sm ${skill.glowColor} hover:shadow-2xl`}>
-                  <CardContent className="p-8 text-center">
-                    <div className={`inline-flex p-6 rounded-full bg-gradient-to-r ${skill.color} mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                      <skill.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                      {skill.name}
-                    </h3>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-
-
-
-
-
-          <div>
-            <h3 className="text-4xl font-semibold mb-12 text-center bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              Technologies I&apos;ve Worked with
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {technologies.map((tech, index) => (
-                <div
-                  key={tech.name}
-                  className={`${tech.bgColor} rounded-2xl p-6 text-center hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-cyan-500/50 backdrop-blur-sm group`}
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                    animation: isVisible ? 'fadeInScale 0.6s ease-out forwards' : 'none'
-                  }}
-                >
-                  <div className="mb-3 group-hover:scale-125 transition-transform duration-300">
-                    <img
-                      src={tech.logo}
-                      alt={`${tech.name} logo`}
-                      className="h-10 w-10 mx-auto"
-                      style={{ filter: "invert(1)" }}
-                    />
-                  </div>
-                  <p className={`text-sm font-medium ${tech.color} group-hover:text-white transition-colors`}>
-                    {tech.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-
-        </div>
-      </section>
-
-      {/* Projects Section */}
-
-      <section id="projects" className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold mb-20 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            {projects.map((project, index) => (
-              <div
-                key={project.id}
-                className="group perspective-1000 cursor-pointer"
-                style={{
-                  animationDelay: `${index * 200}ms`,
-                  animation: isVisible ? "fadeInUp 1s ease-out forwards" : "none",
-                }}
-                onClick={() => setSelectedProject(project)}
-              >
-                <Card className="h-full bg-gradient-to-br from-gray-900/50 to-black/50 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 transform-gpu group-hover:rotateY-3 group-hover:scale-105 backdrop-blur-sm hover:shadow-2xl hover:shadow-purple-500/25 rounded-2xl">
-
-                  {/* Card Content */}
-                  <CardContent className="p-8 flex flex-col h-full">
-
-                    <div className="flex items-start justify-between mb-6">
-                      <CardTitle className="text-2xl text-white group-hover:text-cyan-400 transition-colors duration-300">
-                        {project.title}
-                      </CardTitle>
-
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-full bg-black/40 hover:bg-cyan-500/20 transition-all duration-300 border border-cyan-500/30"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Github className="w-5 h-5 text-cyan-400" />
-                      </a>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-300 mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tech.map((tech) => (
-                        <Badge
-                          key={tech}
-                          className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border-cyan-500/30 hover:border-cyan-500/50 transition-colors"
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-
-
-                    <div className="flex-grow" />
-
-                    {/* View Details  */}
-                    <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-300 rounded-full">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      View Details
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      <section id="contact" className="py-16 md:py-32 px-4 md:px-6 relative z-10">
-  <div className="max-w-4xl mx-auto text-center">
-    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-      Let&apos;s Build Something Amazing
-    </h2>
-    <p className="text-lg md:text-xl text-gray-300 mb-8 md:mb-12">
-      Let&apos;s connect and create.
-    </p>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-16">
-      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-sm">
-        <Mail className="w-8 h-8 md:w-12 md:h-12 text-cyan-400 mx-auto mb-4" />
-        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">Email</h3>
-        <p className="text-sm md:text-base text-gray-300 break-all">ayush406bhardwaj@gmail.com</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-sm">
-        <Github className="w-8 h-8 md:w-12 md:h-12 text-purple-400 mx-auto mb-4" />
-        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">GitHub</h3>
-        <p className="text-sm md:text-base text-gray-300">@ayushbhardwaj683</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl p-6 md:p-8 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 backdrop-blur-sm sm:col-span-2 md:col-span-1">
-        <Linkedin className="w-8 h-8 md:w-12 md:h-12 text-pink-400 mx-auto mb-4" />
-        <h3 className="text-lg md:text-xl font-semibold text-white mb-2">LinkedIn</h3>
-        <p className="text-sm md:text-base text-gray-300">Connect with me</p>
-      </div>
-    </div>
-
-    {/* Socials Container */}
-    <div className="flex flex-wrap justify-center gap-3 md:gap-0 md:space-x-6">
-      <a
-        href="https://github.com/ayushbhardwaj683"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-cyan-500/25"
-      >
-        <Github className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-
-      <a
-        href="https://www.linkedin.com/in/ayush-bhardwaj-1b0215254/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-blue-500 hover:to-blue-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-blue-500/25"
-      >
-        <Linkedin className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-
-      <a
-        href="https://x.com/bhardwaj683"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-purple-500 hover:to-pink-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-purple-500/25"
-      >
-        <Twitter className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-
-      <a
-        href="https://leetcode.com/u/bhardwaj683/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-orange-500 hover:to-red-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-orange-500/25"
-      >
-        <Code className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-
-      <a
-        href="mailto:ayush406bhardwaj@gmail.com"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-green-500 hover:to-emerald-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-green-500/25"
-      >
-        <Mail className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-
-      <a
-        href="tel:+916203764676"
-        className="p-3 md:p-4 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-indigo-500/25"
-      >
-        <Phone className="w-5 h-5 md:w-6 md:h-6 text-white" />
-      </a>
-    </div>
-  </div>
-</section>
-
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-gray-700/50 bg-black/20 backdrop-blur-sm relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-400">
-            © 2024 Ayush Bhardwaj.
-          </p>
-        </div>
-      </footer>
-
-      {/* Project Modal */}
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        @keyframes modal-enter {
-          from {
-            opacity: 0;
-            transform: scale(0.9) rotateX(-10deg);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) rotateX(0deg);
-          }
-        }
-        
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        
-        .rotateY-12 {
-          transform: rotateY(12deg);
-        }
-        
-        .rotateX-6 {
-          transform: rotateX(6deg);
-        }
-        
-        .rotateY-6 {
-          transform: rotateY(6deg);
-        }
-        
-        .animate-modal-enter {
-          animation: modal-enter 0.5s ease-out;
-        }
-        
-        .transform-gpu {
-          transform-style: preserve-3d;
-        }
-      `}</style>
-    </div>
-  )
+      <section id="contact" className="section contact-section"><div className="container"><Reveal className="contact-grid"><div><div className="eyebrow">06 / What’s next?</div><h2>Good things start<br />with a hello.</h2><p>Have an interesting problem, an opportunity, or an idea worth building? I’d love to hear about it.</p></div><div className="contact-links"><a className="contact-link" href={`mailto:${profile.email}`}><div><small>Drop me a line</small><span>{profile.email}</span></div><ArrowUpRight /></a><a className="contact-link" href={socials.linkedin} target="_blank" rel="noreferrer"><div><small>Let’s connect</small><span>Find me on LinkedIn</span></div><ArrowUpRight /></a><a className="contact-link" href={`tel:${profile.phone}`}><div><small>Prefer a conversation?</small><span>+91 62037 64676</span></div><ArrowUpRight /></a></div></Reveal></div></section>
+    </main>
+    <footer className="footer"><div className="container footer-inner"><span>© {new Date().getFullYear()} Ayush Kumar · Built with care.</span><div className="footer-tools"><a href={socials.twitter} target="_blank" rel="noreferrer">X / Twitter</a><a href={socials.leetcode} target="_blank" rel="noreferrer">LeetCode</a><button onClick={() => setRecruiter(true)}>For recruiters</button><button onClick={() => { setQuery(""); setPalette(true); }} aria-label="Open quick navigation, Control K"><Search size={15} /></button></div></div></footer>
+    {showTop && <button className="icon-button back-top" aria-label="Back to top" onClick={() => navigate("home")}><ArrowUp /></button>}
+    <Chatbot />
+    {selected && <Modal title={selected.title} onClose={() => setSelected(null)} className="project-dialog"><div className="eyebrow">{selected.category} / Project details</div><p>{selected.longDescription}</p><h3>What it does</h3><ul>{selected.features.map(f => <li key={f}>{f}</li>)}</ul><div className="tags">{selected.tech.map(t => <span className="tag" key={t}>{t}</span>)}</div><a href={selected.githubUrl} target="_blank" rel="noreferrer" className="primary-button">View source on GitHub <Github /></a>{selected.liveUrl && <a href={selected.liveUrl} target="_blank" rel="noreferrer" className="text-link">Live project <ExternalLink /></a>}</Modal>}
+    {palette && <Modal title="Jump to something" onClose={() => setPalette(false)}><input autoFocus aria-label="Search navigation commands" className="palette-input" placeholder="Search pages, résumé, links…" value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && commands[0]) { setPalette(false); commands[0].run(); } }} /><div className="palette-results">{commands.map(c => <button key={c.label} onClick={() => { setPalette(false); c.run(); }}>{c.label}</button>)}{!commands.length && <p>No matching commands.</p>}</div></Modal>}
+    {recruiter && <Modal title="A quick introduction" onClose={() => setRecruiter(false)}><div className="eyebrow"><Briefcase size={16} /> Recruiter snapshot</div><p>{profile.recruiterSummary}</p><div className="snapshot-facts"><span className="tag">BCA · Class of 2026</span><span className="tag">Based in India</span><span className="tag">{profile.availability}</span></div><a className="primary-button" href={profile.resumeUrl} download="Ayush_Kumar_Resume.pdf">Download résumé <Download /></a><Button variant="ghost" className="ml-4" onClick={() => { window.location.href = `mailto:${profile.email}`; }}>Get in touch <ArrowUpRight className="ml-2" /></Button></Modal>}
+  </>;
 }
