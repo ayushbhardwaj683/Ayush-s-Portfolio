@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------
 
 export const profile = {
-  name: "Ayush Kumar",
+  name: "Ayush Bhardwaj",
   firstName: "AYUSH",
   role: "AI & Automation Engineer",
   tagline: "I build reliable systems and thoughtful interfaces.",
@@ -13,7 +13,7 @@ export const profile = {
   email: "ayush406bhardwaj@gmail.com",
   phone: "+916203764676",
   resumeUrl: "/resume.pdf",
-  avatar: "/ayush-portrait.png",
+  avatar: "/ayush-portrait-clean.png",
   about: [
     "I'm someone who learns best by doing — quietly building, experimenting, and digging deeper than what's immediately visible.",
     "I'm drawn to systems that are elegant in their logic, solutions that genuinely solve problems, and challenges that demand more than a quick fix. I find joy in connecting the dots — between ideas, technologies, and people.",
@@ -21,7 +21,7 @@ export const profile = {
   ],
   // Short version shown in Recruiter Mode
   recruiterSummary:
-    "BCA graduate (2026), currently an AI & Automation Intern at The Elite Point. Shipped 20+ production workflows, scaled weekly research from 700 to 3,000 records, and reduced manual review by 60–70%. Previously a Full Stack Developer Intern at Avijo Healthcare, working on authentication security and production reliability.",
+    "BCA graduate (2026) with experience in AI automation, full-stack development, authentication security, and production reliability. Currently exploring business analysis, with an interest in understanding problems, defining requirements, and building useful software. See Work Experience for the role details.",
 };
 
 export const socials = {
@@ -30,14 +30,6 @@ export const socials = {
   twitter: "https://x.com/bhardwaj683",
   leetcode: "https://leetcode.com/u/bhardwaj683/",
 };
-
-// Quick "bento" stat tiles for the hero / about area.
-export const stats = [
-  { label: "Production workflows & agents", value: "20+" },
-  { label: "Records processed weekly", value: "3,000" },
-  { label: "Qualified-lead accuracy", value: "80%" },
-  { label: "Less manual review", value: "60–70%" },
-];
 
 export interface Experience {
   role: string;
@@ -232,7 +224,7 @@ export const knowledgeBase: KBEntry[] = [
   {
     keywords: ["who", "you", "about", "yourself", "ayush", "introduce"],
     answer:
-      "I'm Ayush Kumar, a full-stack developer who loves building reliable backends and clean, thoughtful interfaces. I work mostly with Next.js, Node.js, React, MongoDB and Python.",
+      "I'm Ayush Bhardwaj, a full-stack developer who loves building reliable backends and clean, thoughtful interfaces. I work mostly with Next.js, Node.js, React, MongoDB and Python.",
   },
   {
     keywords: ["skill", "tech", "stack", "technolog", "language", "know", "tools"],

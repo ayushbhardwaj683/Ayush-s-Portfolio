@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ayush Kumar — Full-Stack Developer",
+  title: "Ayush Bhardwaj — Full-Stack Developer",
   description:
-    "Portfolio of Ayush Kumar, an AI automation and full-stack developer building production workflows, reliable backends, and thoughtful interfaces.",
+    "Portfolio of Ayush Bhardwaj, an AI automation and full-stack developer building production workflows, reliable backends, and thoughtful interfaces.",
   openGraph: {
-    title: "Ayush Kumar — Full-Stack Developer",
+    title: "Ayush Bhardwaj — Full-Stack Developer",
     description: "Full-stack developer • Next.js, Node.js, React, Python.",
     type: "website",
   },
