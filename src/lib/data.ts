@@ -218,11 +218,12 @@ export const projectFilters = ["All", "AI", "Backend", "Web"];
 export interface KBEntry {
   keywords: string[];
   answer: string;
+  priority?: number;
 }
 
 export const knowledgeBase: KBEntry[] = [
   {
-    keywords: ["who", "you", "about", "yourself", "ayush", "introduce"],
+    keywords: ["who", "yourself", "ayush", "introduce"],
     answer:
       "I'm Ayush Bhardwaj, a full-stack developer who loves building reliable backends and clean, thoughtful interfaces. I work mostly with Next.js, Node.js, React, MongoDB and Python.",
   },
@@ -253,11 +254,13 @@ export const knowledgeBase: KBEntry[] = [
   },
   {
     keywords: ["backend", "api", "server", "database", "node"],
+    priority: 1,
     answer:
       "Backend is my happy place. I build REST APIs with Node.js/Express and FastAPI, handle JWT auth and role-based access, add real-time features with Socket.io, and model data in MongoDB and SQL.",
   },
   {
     keywords: ["frontend", "react", "next", "ui", "design", "css"],
+    priority: 1,
     answer:
       "On the frontend I use React, Next.js and TypeScript with Tailwind CSS, and add subtle motion with CSS and scroll-triggered reveals. I care about responsive, accessible UI and smooth micro-interactions — like the ones on this site.",
   },
@@ -265,6 +268,12 @@ export const knowledgeBase: KBEntry[] = [
     keywords: ["ai", "ml", "machine", "gemini", "rag", "llm"],
     answer:
       "I've built AI-powered apps: an AI Study Planner using Gemini, and an AI study assistant with a Retrieval-Augmented Generation (RAG) pipeline over YouTube videos and PDFs.",
+  },
+  {
+    keywords: ["business", "analysis", "analyst", "healthcare", "case", "learning", "exploring"],
+    priority: 2,
+    answer:
+      "I’ve started learning business analysis. My first case study looks at how AI in Indian hospitals could change the daily work and skills of doctors, technicians and other staff. It includes public sources and a simple what-if dashboard, with made-up scenarios clearly labelled. You can open it from the Projects section — it’s a learning exercise, not professional consulting experience.",
   },
   {
     keywords: ["hello", "hi", "hey", "yo", "greetings"],
@@ -282,6 +291,7 @@ export const chatSuggestions = [
   "Tell me about your projects",
   "Are you available to hire?",
   "What backend experience do you have?",
+  "What are you learning in business analysis?",
 ];
 
 export const chatFallback =
