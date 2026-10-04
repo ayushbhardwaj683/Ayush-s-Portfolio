@@ -52,6 +52,8 @@ export const experiences: Experience[] = [
       "Combined deterministic ICP scoring with LLM classification, reaching 80% qualified-lead accuracy and reducing manual review by 60–70%.",
       "Scaled throughput from 700 to 3,000 records per week using custom scrapers, Apify token rotation, and continuous enrichment improvements.",
       "Automated per-segment Excel reporting and Gmail delivery, with formula-injection guarding and database logs tracing every output to its run.",
+      "Developed and validated a LinkedIn Sales Navigator pipeline that queues searches, captures paginated profiles, and delivers company-enriched leads in formatted Excel reports.",
+      "Made extraction runs resumable with page-level checkpoints, progress tracking, and error recovery, preserving collected leads through interruptions. Added upfront Apify credit checks and automatic account switching at usage limits.",
     ],
     stack: ["n8n", "LLMs", "PostgreSQL", "Supabase", "Apify", "REST APIs"],
   },
